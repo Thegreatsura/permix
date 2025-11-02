@@ -9,7 +9,7 @@ export default antfu(
       'react/no-use-context': 'off',
       'style/indent': 'off', // temp due to bug
     },
-    ignores: ['**/.source/**'],
+    ignores: ['**/.source/**', '**/next-env.d.ts'],
   },
   {
     files: ['docs/**/*.ts?(x)'],
