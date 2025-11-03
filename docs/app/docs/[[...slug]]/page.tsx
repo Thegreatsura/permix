@@ -1,7 +1,4 @@
 import type { Metadata } from 'next'
-import * as Twoslash from 'fumadocs-twoslash/ui'
-import * as StepsComponents from 'fumadocs-ui/components/steps'
-import * as TabsComponents from 'fumadocs-ui/components/tabs'
 import { createRelativeLink } from 'fumadocs-ui/mdx'
 import {
   DocsBody,
@@ -39,9 +36,6 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
         <MDX
           components={getMDXComponents({
             a: createRelativeLink(source, page),
-            ...TabsComponents,
-            ...StepsComponents,
-            ...Twoslash,
           })}
         />
       </DocsBody>

@@ -4,7 +4,7 @@ import InitCode from './code/init.mdx'
 import SetupCode from './code/setup.mdx'
 import UsageCode from './code/usage.mdx'
 
-export default function Home() {
+export default function Page() {
   return (
     <div className="min-h-screen">
       <div className="container grid grid-cols-1 lg:grid-cols-2 mx-auto px-4 py-16 sm:px-6 lg:px-8">

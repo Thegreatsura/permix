@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   description: 'A lightweight, framework-agnostic, type-safe permissions management library for client-side and server-side JavaScript applications.',
   keywords: ['permissions', 'authorization', 'acl', 'access-control', 'typescript', 'react', 'vue', 'type-safe', 'rbac', 'security', 'permissions-management', 'frontend', 'javascript'],
   openGraph: {
-    title: 'Permix - Type-safe permissions management for JavaScript',
-    description: 'A lightweight, framework-agnostic, type-safe permissions management library for client-side and server-side JavaScript applications.',
+    title: 'Permix - Type-safe permissions management for TypeScript',
+    description: 'A lightweight, framework-agnostic, type-safe permissions management library for client-side and server-side TypeScript applications.',
     url: 'https://permix.letstri.dev',
     siteName: 'Permix',
   },
