@@ -132,6 +132,9 @@
     "react": {
       "optional": true
     },
+    "react-dom": {
+      "optional": true
+    },
     "solid-js": {
       "optional": true
     },
