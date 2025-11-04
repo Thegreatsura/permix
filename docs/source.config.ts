@@ -1,6 +1,7 @@
 import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins'
 import { defineConfig, defineDocs } from 'fumadocs-mdx/config'
 import { transformerTwoslash } from 'fumadocs-twoslash'
+import { createFileSystemTypesCache } from 'fumadocs-twoslash/cache-fs'
 
 export const docs = defineDocs({
   dir: 'content/docs',
@@ -18,9 +19,12 @@ export default defineConfig({
         light: 'github-light',
         dark: 'github-dark',
       },
+      langs: ['js', 'http', 'console'],
       transformers: [
         ...(rehypeCodeDefaultOptions.transformers ?? []),
-        transformerTwoslash(),
+        transformerTwoslash({
+          typesCache: createFileSystemTypesCache(),
+        }),
       ],
     },
   },
