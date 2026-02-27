@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "permix": "workspace:*",
-    "vue": "^3.5.13"
+    "vue": "catalog:"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.1",
-    "@vue/tsconfig": "^0.8.1",
-    "typescript": "^5.9.3",
-    "vite": "^7.1.12",
-    "vue-tsc": "^3.1.3"
+    "@vitejs/plugin-vue": "catalog:",
+    "@vue/tsconfig": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vue-tsc": "catalog:"
   }
 }

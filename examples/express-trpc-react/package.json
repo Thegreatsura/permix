@@ -10,28 +10,28 @@
     "drizzle:migrate": "cd server && drizzle-kit migrate"
   },
   "dependencies": {
-    "@trpc/client": "^11.7.1",
-    "@trpc/server": "^11.7.1",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "drizzle-orm": "^0.44.7",
-    "express": "^5.1.0",
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "cors": "catalog:",
+    "dotenv": "catalog:",
+    "drizzle-orm": "catalog:",
+    "express": "catalog:",
     "permix": "workspace:*",
-    "pg": "^8.16.3",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "zod": "^4.1.12"
+    "pg": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.5",
-    "@types/pg": "^8.15.6",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.1.0",
-    "drizzle-kit": "^0.31.6",
-    "tsx": "^4.20.6",
-    "vite": "^7.1.12",
-    "vite-tsconfig-paths": "^5.1.4"
+    "@types/cors": "catalog:",
+    "@types/express": "catalog:",
+    "@types/pg": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "drizzle-kit": "catalog:",
+    "tsx": "catalog:",
+    "vite": "catalog:",
+    "vite-tsconfig-paths": "catalog:"
   }
 }
