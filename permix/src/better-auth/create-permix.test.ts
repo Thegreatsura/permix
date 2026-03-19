@@ -1,4 +1,5 @@
 // @vitest-environment node
+import type { User } from 'better-auth'
 import type { PermixDefinition } from '../core/create-permix'
 import { getTestInstance } from 'better-auth/test'
 import { describe, expect, it } from 'vitest'
@@ -144,7 +145,7 @@ describe('createPermix', () => {
   })
 
   it('should expose reusable rules function', () => {
-    const rules = ({ user }: { user: Record<string, unknown> }) => ({
+    const rules = ({ user }: { user: User & Record<string, any> }) => ({
       post: {
         create: user.role === 'admin',
         read: true,

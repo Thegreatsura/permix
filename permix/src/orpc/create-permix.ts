@@ -6,12 +6,24 @@ import { createCheckContext } from '../core/params'
 import { createTemplate } from '../core/template'
 import { pick } from '../utils'
 
-export interface PermixOptions<T extends PermixDefinition> {
+type PermixInstance<Definition extends PermixDefinition> = Pick<Permix<Definition>, 'check' | 'dehydrate'>
+
+export interface PermixOrpc<
+  Definition extends PermixDefinition,
+> {
+  setup: (rules: PermixRules<Definition>) => PermixInstance<Definition>
+  checkMiddleware: <EntityKey extends keyof Definition>(...params: CheckFunctionParams<Definition, EntityKey>) => any
+  template: <T = void>(
+    ...params: Parameters<typeof createTemplate<T, Definition>>
+  ) => ReturnType<typeof createTemplate<T, Definition>>
+}
+
+export interface PermixOptions<T extends PermixDefinition, ContextKey extends string = string> {
   /**
    * The key in the context object where the permix instance is stored.
    * @default 'permix'
    */
-  contextKey?: string
+  contextKey?: ContextKey
   /**
    * Custom error to throw when permission is denied
    */
@@ -23,15 +35,18 @@ export interface PermixOptions<T extends PermixDefinition> {
  *
  * @link https://permix.letstri.dev/docs/integrations/orpc
  */
-export function createPermix<Definition extends PermixDefinition>(
+export function createPermix<
+  Definition extends PermixDefinition,
+  ContextKey extends string = string,
+>(
   {
-    contextKey = 'permix',
+    contextKey = 'permix' as ContextKey,
     forbiddenError = () => new ORPCError('FORBIDDEN', {
       message: 'You do not have permission to perform this action',
     }),
-  }: PermixOptions<Definition> = {},
-) {
-  const plugin = os.$context<Record<string, Pick<Permix<Definition>, 'check' | 'dehydrate'>>>()
+  }: PermixOptions<Definition, ContextKey> = {},
+): PermixOrpc<Definition> {
+  const plugin = os.$context<Record<ContextKey, PermixInstance<Definition>>>()
 
   function setup(rules: PermixRules<Definition>) {
     return pick(createPermixCore<Definition>(rules), ['check', 'dehydrate'])

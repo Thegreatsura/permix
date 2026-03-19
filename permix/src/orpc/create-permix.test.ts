@@ -82,9 +82,7 @@ describe('createPermix', () => {
 
   it('should throw if called without setupMiddleware', async () => {
     const router = orpcPermix.router({
-      // @ts-expect-error should throw
       createPost: orpcPermix
-      // @ts-expect-error should throw
         .use(permix.checkMiddleware('post', 'create'))
         .handler(({ context }) => {
           // @ts-expect-error should throw
@@ -543,6 +541,11 @@ describe('createPermix', () => {
     const p = customPermix.setup({
       post: {
         create: true,
+        read: true,
+        update: true,
+      },
+      user: {
+        delete: true,
       },
     })
 
@@ -550,10 +553,12 @@ describe('createPermix', () => {
 
     const router = orpcCustom.router({
       createPost: orpcCustom
-        .route({
-          context: {
-            customPermixKey: p,
-          },
+        .use(({ next }) => {
+          return next({
+            context: {
+              customPermixKey: p,
+            },
+          })
         })
         .use(customPermix.checkMiddleware('post', 'create'))
         .handler(({ context }) => {
@@ -562,7 +567,7 @@ describe('createPermix', () => {
     })
 
     const result = await new RPCHandler(router).handle(createRequest('/createPost'), {
-      context: { customPermixKey: p }
+      context: { customPermixKey: p },
     })
 
     expect(result.response?.status).toEqual(200)

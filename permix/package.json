@@ -2,9 +2,9 @@
   "name": "permix",
   "displayName": "Permix",
   "type": "module",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "private": false,
-  "packageManager": "pnpm@10.30.3",
+  "packageManager": "pnpm@10.32.1",
   "description": "Permix is a lightweight, framework-agnostic, type-safe permissions management library for JavaScript applications on the client and server sides.",
   "author": "Valerii Strilets",
   "license": "MIT",
@@ -102,6 +102,7 @@
   "peerDependencies": {
     "@orpc/server": ">=1",
     "@trpc/server": ">=11",
+    "better-auth": ">=1",
     "elysia": ">=1",
     "express": ">=4",
     "fastify": ">=5",
@@ -110,7 +111,6 @@
     "react": ">=18",
     "react-dom": ">=18",
     "solid-js": ">=1",
-    "better-auth": ">=1",
     "vue": ">=3"
   },
   "peerDependenciesMeta": {
@@ -153,7 +153,6 @@
   },
   "devDependencies": {
     "@babel/preset-react": "catalog:",
-    "better-auth": "catalog:",
     "@babel/preset-typescript": "catalog:",
     "@rollup/plugin-babel": "catalog:",
     "@solidjs/testing-library": "catalog:",
@@ -167,6 +166,7 @@
     "@vitest/coverage-v8": "catalog:",
     "@vue/test-utils": "catalog:",
     "babel-preset-solid": "catalog:",
+    "better-auth": "catalog:",
     "happy-dom": "catalog:",
     "react-dom": "catalog:",
     "supertest": "catalog:",

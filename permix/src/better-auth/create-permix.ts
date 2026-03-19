@@ -1,5 +1,5 @@
+import type { BetterAuthPlugin, Session, User } from 'better-auth'
 import type { BetterAuthClientPlugin } from 'better-auth/client'
-import type { BetterAuthPlugin } from 'better-auth'
 import type { PermixDefinition, PermixRules } from '../core/create-permix'
 import type { MaybePromise } from '../core/utils'
 import { createAuthEndpoint, sessionMiddleware } from 'better-auth/api'
@@ -7,8 +7,8 @@ import { createPermix as createPermixCore } from '../core/create-permix'
 import { createTemplate } from '../core/template'
 
 export interface PermixSession {
-  user: Record<string, unknown>
-  session: Record<string, unknown>
+  user: User & Record<string, any>
+  session: Session & Record<string, any>
 }
 
 export interface PermixOptions<T extends PermixDefinition> {

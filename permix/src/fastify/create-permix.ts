@@ -1,4 +1,4 @@
-import type { FastifyPluginAsync, FastifyReply, FastifyRequest, RouteHandler } from 'fastify'
+import type { FastifyInstance, FastifyPluginAsync, FastifyReply, FastifyRequest, RouteHandler } from 'fastify'
 import type { Permix, PermixDefinition, PermixRules } from '../core/create-permix'
 import type { CheckContext, CheckFunctionParams } from '../core/params'
 import type { MaybePromise } from '../core/utils'
@@ -51,7 +51,7 @@ export function createPermix<Definition extends PermixDefinition>(
   }
 
   function plugin(callback: (context: MiddlewareContext) => MaybePromise<PermixRules<Definition>>): FastifyPluginAsync {
-    return fp(async (fastify) => {
+    return fp(async (fastify: FastifyInstance) => {
       fastify.decorateRequest(permixSymbol, null)
 
       fastify.addHook('onRequest', async (request, reply) => {
