@@ -16,13 +16,13 @@
   "devDependencies": {
     "husky": "^9.1.7",
     "npm-run-all2": "^9.0.3",
-    "oxfmt": "^0.67.0",
-    "oxlint": "^1.82.0",
-    "oxlint-tsgolint": "^7.0.2001",
-    "taze": "^21.1.0",
-    "turbo": "^2.10.12",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
+    "oxlint-tsgolint": "^7.0.2003",
+    "taze": "^21.3.0",
+    "turbo": "^2.11.6",
     "typescript": "^6.0.3",
-    "ultracite": "^7.11.1"
+    "ultracite": "^7.12.2"
   },
-  "packageManager": "pnpm@12.4.1"
+  "packageManager": "pnpm@12.8.1"
 }
