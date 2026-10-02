@@ -5,7 +5,7 @@ description: >-
 metadata:
   type: core
   library: permix
-  library_version: '4.1.2'
+  library_version: '4.4.0'
 requires:
   - permix-getting-started
 sources:
