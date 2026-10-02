@@ -12,6 +12,15 @@ Unlike the server integrations (which lock the surface down to `check` / `dehydr
 
 The integration depends only on `effect` (no `@effect/platform` required), so it works everywhere Effect runs.
 
+Two entry points are exposed so you can choose the one that matches your installed Effect version:
+
+| Import path        | Effect version    |
+| ------------------ | ----------------- |
+| `permix/effect`    | **v4** (`>=4`)    |
+| `permix/effect/v3` | **v3** (`>=3 <4`) |
+
+Both entry points expose the same API surface. Examples on this page use Effect v4; on v3, define services with `Context.Tag` instead of `Context.Service`.
+
 <Callout>
   Before getting started with the Effect integration, make sure you've completed
   the initial setup steps in the [Quick Start](/docs/quick-start) guide.
@@ -73,7 +82,7 @@ interface User {
   id: string
   role: 'admin' | 'member'
 }
-class CurrentUser extends Context.Tag('CurrentUser')<CurrentUser, User>() {}
+class CurrentUser extends Context.Service<CurrentUser, User>()('CurrentUser') {}
 
 const PermixLive = permix.layerSetup(
   Effect.gen(function* () {
@@ -229,7 +238,7 @@ interface User {
   id: string
   role: 'admin' | 'member'
 }
-class CurrentUser extends Context.Tag('CurrentUser')<CurrentUser, User>() {}
+class CurrentUser extends Context.Service<CurrentUser, User>()('CurrentUser') {}
 
 // 3. Build a Layer that derives rules from CurrentUser
 const PermixLive = permix.layerSetup(
@@ -281,3 +290,34 @@ program.pipe(
   Effect.provide(guest.layer({ ... })),
 )
 ```
+
+## Effect v3
+
+If your app still runs Effect v3, import from `permix/effect/v3`. The API is identical; only your own service definitions use the v3 syntax:
+
+```ts
+import { Context, Effect } from 'effect'
+import { createPermix } from 'permix/effect/v3'
+
+const permix = createPermix<{
+  post: ['create', 'read']
+}>()
+
+class CurrentUser extends Context.Tag('CurrentUser')<
+  CurrentUser,
+  { role: 'admin' | 'member' }
+>() {}
+
+const PermixLive = permix.layerSetup(
+  Effect.gen(function* () {
+    const user = yield* CurrentUser
+    return { post: { create: user.role === 'admin', read: true } }
+  })
+)
+```
+
+When you upgrade to Effect v4:
+
+1. Change the import from `permix/effect/v3` to `permix/effect`.
+2. Replace `Context.Tag('Key')<Self, Shape>()` with `Context.Service<Self, Shape>()('Key')` in your own services.
+3. If you passed `permix.Tag` to Effect APIs directly, it is now a `Context.Service` key instead of a `Context.Tag`.

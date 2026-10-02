@@ -798,10 +798,13 @@ importers:
         version: 2.5.1(@vue/compiler-dom@3.5.35)(@vue/server-renderer@3.5.35(vue@3.5.35(typescript@6.0.3)))(vue@3.5.35(typescript@6.0.3))
       drizzle-orm:
         specifier: 1.0.0-rc.4
-        version: 1.0.0-rc.4(@sinclair/typebox@0.34.49)(@types/pg@8.23.1)(effect@3.22.2)(zod@4.6.5)
+        version: 1.0.0-rc.4(@sinclair/typebox@0.34.49)(@types/pg@8.23.1)(effect@4.0.0)(zod@4.6.5)
       effect:
-        specifier: ^3.22.2
-        version: 3.22.2
+        specifier: ^4.0.0
+        version: 4.0.0
+      effect-v3:
+        specifier: npm:effect@^3.22.2
+        version: effect@3.22.2
       fastify:
         specifier: ^5.12.5
         version: 5.12.5
@@ -11346,11 +11349,11 @@ snapshots:
     optionalDependencies:
       '@types/trusted-types': 2.0.7
 
-  drizzle-orm@1.0.0-rc.4(@sinclair/typebox@0.34.49)(@types/pg@8.23.1)(effect@3.22.2)(zod@4.6.5):
+  drizzle-orm@1.0.0-rc.4(@sinclair/typebox@0.34.49)(@types/pg@8.23.1)(effect@4.0.0)(zod@4.6.5):
     optionalDependencies:
       '@sinclair/typebox': 0.34.49
       '@types/pg': 8.23.1
-      effect: 3.22.2
+      effect: 4.0.0
       zod: 4.6.5
 
   drizzle-orm@1.0.0-rc.5-ab785fc(@sinclair/typebox@0.34.49)(@types/pg@8.23.1)(effect@4.0.0)(zod@4.5.4):
@@ -11382,8 +11385,7 @@ snapshots:
       '@standard-schema/spec': 1.1.0
       fast-check: 3.23.2
 
-  effect@4.0.0:
-    optional: true
+  effect@4.0.0: {}
 
   electron-to-chromium@1.5.364: {}
 

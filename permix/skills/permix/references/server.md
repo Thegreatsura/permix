@@ -108,7 +108,7 @@ app.get('/posts/:id', (req, res) => {
 | oRPC | `permix/orpc` |
 | Generic HTTP | `permix/node` or `permix/server` |
 | Elysia | `permix/elysia` |
-| Effect | `permix/effect` — see integration docs |
+| Effect | `permix/effect` (v4; `permix/effect/v3` for Effect v3) — see integration docs |
 | Drizzle ORM | `permix/drizzle` (and `permix/drizzle/legacy`) — see integration docs |
 
 Use the same `D` schema shape as the client instance.

@@ -1,16 +1,16 @@
-import { Context, Effect, Layer } from 'effect'
+import { Context, Effect, Layer } from 'effect-v3'
 
-import type { PermixNotReadyError, PermixRuleNotDefinedError } from '../core'
-import { createPermix as createPermixCore, createTemplate } from '../core'
-import type { CheckArgs } from '../core/check'
-import type { Definition } from '../core/definitions'
+import type { PermixNotReadyError, PermixRuleNotDefinedError } from '../../core'
+import { createPermix as createPermixCore, createTemplate } from '../../core'
+import type { CheckArgs } from '../../core/check'
+import type { Definition } from '../../core/definitions'
 import type {
   DehydratedState,
   Permix as PermixCore,
   PermixHooks,
   Rules,
   RulesPaths,
-} from '../core/permix'
+} from '../../core/permix'
 
 export interface PermixOptions {
   /**
@@ -35,7 +35,7 @@ export function createPermix<D extends Definition>(
 ) {
   const id = options.id ?? `permix/effect#${counter++}`
 
-  const Tag = Context.Service<PermixCore<D>>(id)
+  const Tag = Context.GenericTag<PermixCore<D>>(id)
 
   function layer(rules?: Rules<D>) {
     return Layer.sync(Tag, () => createPermixCore<D>(rules))

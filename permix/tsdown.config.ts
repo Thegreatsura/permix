@@ -18,12 +18,18 @@ export default defineConfig({
     './src/fastify/index.ts',
     './src/solid/index.ts',
     './src/effect/index.ts',
+    './src/effect/v3/index.ts',
     './src/drizzle/index.ts',
     './src/drizzle/legacy/index.ts',
     './src/next/index.ts',
     './src/tanstack-start/index.ts',
     './src/nest/index.ts',
   ],
+  // `effect-v3` is a dev-only alias for effect v3; consumers import `effect`.
+  deps: { neverBundle: ['effect-v3'] },
+  outputOptions: {
+    paths: { 'effect-v3': 'effect' },
+  },
   dts: {
     build: true,
   },

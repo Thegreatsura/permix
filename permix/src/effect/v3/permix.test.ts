@@ -1,8 +1,8 @@
-import { Context, Effect } from 'effect'
+import { Context, Effect } from 'effect-v3'
 import { describe, expect, expectTypeOf, it } from 'vitest'
 
-import type { ValidateDefinition } from '../core'
-import { PermixNotReadyError, PermixRuleNotDefinedError } from '../core'
+import type { ValidateDefinition } from '../../core'
+import { PermixNotReadyError, PermixRuleNotDefinedError } from '../../core'
 import { createPermix } from './permix'
 
 interface Post {
@@ -69,9 +69,7 @@ describe(createPermix, () => {
       id: string
       role: 'admin' | 'member'
     }
-    class CurrentUser extends Context.Service<CurrentUser, User>()(
-      'CurrentUser'
-    ) {}
+    class CurrentUser extends Context.Tag('CurrentUser')<CurrentUser, User>() {}
 
     const PermixLive = permix.layerSetup(
       Effect.gen(function* PermixLive() {
