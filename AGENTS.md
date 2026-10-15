@@ -36,7 +36,7 @@ pnpm run format
 pnpm run format:check
 cd permix && pnpm run build
 cd docs && pnpm dev          # http://localhost:3000
-cd docs && pnpm types:check  # fumadocs-mdx + tsc for docs only
+cd docs && pnpm check-types  # fumadocs-mdx + tsc for docs only
 ```
 
 Do not commit unless the user asks.

@@ -28,6 +28,7 @@ Restart your editor or start a new agent chat so skills are picked up. When you 
 ## Without skills
 
 - Official docs: https://permix.letstri.dev/docs
+- AI agents guide (prompts, `AGENTS.md` conventions, in-app agent tools): https://permix.letstri.dev/docs/agents
 - LLM-oriented exports: https://permix.letstri.dev/llms.txt and https://permix.letstri.dev/llms-full.txt
 
 ## Optional integrations (docs only)

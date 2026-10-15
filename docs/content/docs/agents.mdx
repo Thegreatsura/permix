@@ -1,0 +1,198 @@
+---
+title: AI Agents
+description: Your agents know every permission in place — and the compiler stops them from inventing new ones
+icon: RiRobot2Line
+---
+
+## Overview
+
+AI coding agents are good at following structure and bad at guessing it. Hand-rolled checks like `user.role === 'admin'` scattered across a codebase force an agent to guess which roles exist and what each one is allowed to do. Permix gives it one typed map instead:
+
+- **One file, every permission.** The generic you pass to `createPermix` lists every entity and action in your app. An agent reads that file once and knows the full permission model — no grepping through components and middleware.
+- **The compiler is the reviewer.** Every `check()` path, `setup()` rule, and `template()` is type-checked against the schema. If an agent invents a permission, forgets one, or misspells one, `tsc` fails before any code ships.
+- **One API on every layer.** The same `permix.check('post.edit', post)` works in React, Vue, Solid, Svelte, and every server integration. An agent that learned it once can protect a button, a route, and a tRPC procedure.
+
+## The schema is the map
+
+Point your agent at the file with your schema, and it has the complete list of what can be checked:
+
+```ts title="/lib/permix.ts"
+import { createPermix } from 'permix'
+
+import type { Comment, Post } from './db'
+
+export const permix = createPermix<{
+  post: [
+    'create',
+    'read',
+    { name: 'update'; type: Post },
+    { name: 'delete'; type: Post },
+  ]
+  comment: ['create', 'read', { name: 'update'; type: Comment }]
+}>()
+
+export type PermissionPath = typeof permix.$inferPath
+// 'post.create' | 'post.read' | 'post.update' | ... | 'comment.update'
+```
+
+There is nothing else to discover. Roles are [templates](/docs/guide/template) built from the same schema, and relationship rules are plain [closures](/docs/guide/rebac) next to the action they guard.
+
+## Guardrails for generated code
+
+Agents hallucinate. With Permix, a hallucinated permission is a type error, not a silent security bug:
+
+```ts twoslash
+import { createPermix } from 'permix'
+
+const permix = createPermix<{
+  post: ['create', 'read', 'publish']
+}>()
+
+// @errors: 2345
+// The agent invented an action that does not exist
+permix.check('post.archive')
+```
+
+It works the other way too. When an agent adds a new action to the schema, every `setup()` and `template()` that does not handle it stops compiling, so the agent gets a precise to-do list instead of a role that quietly denies (or allows) the new action:
+
+```ts twoslash
+import { createPermix } from 'permix'
+
+const permix = createPermix<{
+  post: ['create', 'read', 'publish']
+}>()
+
+// @errors: 2741
+// `publish` was just added to the schema — this role must decide on it
+const editor = permix.template({
+  post: {
+    create: true,
+    read: true,
+  },
+})
+```
+
+<Callout>
+  Ask your agent to run `tsc --noEmit` (or your `check-types` script) after
+  touching permissions. The type errors are the checklist.
+</Callout>
+
+## Teach your agent Permix
+
+### Skills
+
+Permix ships versioned [agent skills](https://github.com/letstri/permix/tree/main/permix/skills) for Claude Code, Cursor, and any agent that supports skills. Add them from GitHub:
+
+```bash
+npx skills add letstri/permix
+```
+
+Or copy them from the installed package so they always match your Permix version:
+
+```bash
+cp -r node_modules/permix/skills/permix .agents/skills/
+cp -r node_modules/permix/skills/permix-getting-started .agents/skills/
+```
+
+| Skill | When the agent uses it |
+| --- | --- |
+| `permix-getting-started` | New project: schema, first `setup()`, roles and templates |
+| `permix` | Everything after setup: `check()`, ReBAC, frontend bindings, SSR, server middleware |
+
+### Docs for LLMs
+
+Every page of these docs is available as plain Markdown for agents and chat assistants:
+
+| Resource | What it contains |
+| --- | --- |
+| [`/llms.txt`](/llms.txt) | Index of every docs page with a short description |
+| [`/llms-full.txt`](/llms-full.txt) | The full documentation in one file |
+| `/docs/<page>.md` | A single page as Markdown — append `.md` to any docs URL, e.g. [`/docs/guide/check.md`](/docs/guide/check.md) |
+
+Each page also has a **Copy Markdown** button and an **Open** menu at the top to send it straight to ChatGPT, Claude, or Cursor.
+
+## Tell your agent where permissions live
+
+Skills teach an agent how Permix works. Your project instructions should tell it where **your** permissions are and how your team uses them. Add a section like this to `AGENTS.md`, `CLAUDE.md`, or `.cursor/rules`:
+
+```md title="AGENTS.md"
+## Permissions
+
+- All permissions are defined with Permix in `src/lib/permix.ts`. Read the `createPermix<...>` schema there before adding or checking permissions.
+- Never check roles directly (`user.role === 'admin'`). Use `permix.check()` on the server and the framework hook (`usePermix`) on the client.
+- Roles are `permix.template()` presets in `src/lib/roles.ts`.
+- New action → add it to the schema first, then fix every type error in `setup()` and templates. Do not use `as any` to silence permission types.
+- Protect both layers: server middleware for the endpoint, client check for the UI.
+- Run `pnpm check-types` after any permission change.
+```
+
+Adjust the paths and commands to your project. Agents read these files at the start of every session, so they know your permission model before writing a single line.
+
+## Prompts
+
+Copy these into your agent once skills are installed.
+
+**Set up Permix in an existing project:** see [Installation via Agents](/docs/quick-start#installation-via-agents).
+
+**Add a new permission:**
+
+```
+Add a `<entity>.<action>` permission with Permix.
+
+1. Add the action to the schema in src/lib/permix.ts (with a `type` if the
+   check needs entity data).
+2. Run type checks and decide the rule for every setup() and template()
+   that now fails. Ask me if a role's access is unclear.
+3. Protect the matching server route/procedure with the Permix middleware
+   and gate the UI with the framework hook.
+```
+
+**Audit permission coverage:**
+
+```
+Audit this codebase for authorization gaps using our Permix schema.
+
+1. List every action in the createPermix<...> schema and where it is
+   checked on the server and on the client.
+2. Find mutations, routes, or UI actions that have no permix check, and
+   any direct role comparisons that bypass Permix.
+3. Report the gaps as a table; do not change code yet.
+```
+
+## Permissions for in-app agents
+
+The same instance can gate the AI features **inside** your app. When an assistant acts on behalf of a user, give it only the tools that user is allowed to run and check again before executing:
+
+```ts title="/lib/agent-tools.ts"
+import { permix } from './permix'
+import type { PermissionPath } from './permix'
+
+interface AgentTool {
+  name: string
+  permission: PermissionPath
+  execute: (input: unknown) => Promise<unknown>
+}
+
+const tools: AgentTool[] = [
+  { name: 'createPost', permission: 'post.create', execute: createPost },
+  { name: 'readComments', permission: 'comment.read', execute: readComments },
+]
+
+// Only expose what the current user can do
+export function getAvailableTools() {
+  return tools.filter((tool) => permix.check(tool.permission))
+}
+
+// Re-check on execution — never trust the model to respect the list
+export async function runTool(name: string, input: unknown) {
+  const tool = tools.find((t) => t.name === name)
+
+  if (!tool || !permix.check(tool.permission)) {
+    throw new Error(`Tool "${name}" is not allowed`)
+  }
+
+  return tool.execute(input)
+}
+```
+
+Because `permission` is typed as `PermissionPath`, an agent wiring up a new tool cannot point it at a permission that does not exist. For per-entity rules (ownership, sharing), call `permix.check(path, entity)` inside `execute` once the entity is loaded — see [ReBAC](/docs/guide/rebac).

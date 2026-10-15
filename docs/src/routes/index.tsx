@@ -54,7 +54,7 @@ function Home() {
             </Tabs>
           </div>
         </div>
-        <div className="relative z-10 container mx-auto grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="relative z-10 container mx-auto grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:gap-8">
           {[
             {
               emoji: '🔒',
@@ -73,6 +73,12 @@ function Home() {
               title: 'Simple DX',
               description:
                 'Permix provides an intuitive API that makes managing permissions straightforward and easy to understand.',
+            },
+            {
+              emoji: '🤖',
+              title: 'Agent-ready',
+              description:
+                'One typed schema means your AI agents know every permission in place, and the compiler catches the ones they invent.',
             },
           ].map((item) => (
             <div

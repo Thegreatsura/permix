@@ -30,9 +30,13 @@ permix.check('post.read') // true
 
 Permix has other powerful features, so here's check out the [docs](https://permix.letstri.dev/docs) or the [examples](https://github.com/letstri/permix/tree/main/examples) directory.
 
-## Agent skills
+## AI agents
 
-Permix ships [versioned agent skills](permix/skills/README.md) inside the npm package. Install `permix`, then copy the skill folders you want out of `node_modules/permix/skills/` into your agent config directory. They update when you update the package.
+Your agents know every permission in place: the whole permission model lives in one typed `createPermix<...>` schema, and any permission an agent invents, misspells, or forgets is a TypeScript error.
+
+- [Agent skills](permix/skills/README.md) ship inside the npm package — `npx skills add letstri/permix`, or copy them from `node_modules/permix/skills/` so they match your installed version.
+- LLM-friendly docs: [`llms.txt`](https://permix.letstri.dev/llms.txt), [`llms-full.txt`](https://permix.letstri.dev/llms-full.txt), and any docs page as Markdown by appending `.md` to its URL.
+- Prompts, `AGENTS.md` conventions, and gating in-app AI tools: [AI Agents guide](https://permix.letstri.dev/docs/agents).
 
 ## License
 

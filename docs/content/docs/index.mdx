@@ -10,6 +10,7 @@ import {
   RiFileCopyLine,
   RiHourglassLine,
   RiLinksLine,
+  RiRobot2Line,
   RiSettings3Line,
   RiShieldCheckLine,
   RiWaterFlashLine,
@@ -177,7 +178,7 @@ const canUpdateComment = permix.check('comment.update', comment)
 What are the benefits of using Permix?
 
 - 100% type-safe without writing TypeScript (except for initialization)
-- Single source of truth for your entire app
+- Single source of truth for your entire app — and for the [AI agents](/docs/agents) writing it
 - Perfect match for TypeScript monorepos
 - Zero dependencies
 - Built-in SSR via [dehydrate / hydrate](/docs/guide/hydration)
@@ -218,6 +219,10 @@ What are the benefits of using Permix?
   </Card>
   <Card href="/docs/guide/rebac" title="ReBAC" icon={<RiLinksLine />}>
     Relationship-based rules with closures and data-based checks.
+  </Card>
+  <Card href="/docs/agents" title="AI Agents" icon={<RiRobot2Line />}>
+    One typed schema your agents can read, and a compiler that catches their
+    mistakes.
   </Card>
 </Cards>
 
